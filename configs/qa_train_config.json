@@ -1,0 +1,30 @@
+{
+    "exp_name": "qatrain_exp_trial",
+    "agent": "FinetuneQAModelAgent",
+    "mode": "train",
+    "model_name": "distilbert-base-uncased",
+  
+    "cuda": true,
+    "gpu_device": 0,
+    "seed": 1337,
+  
+    "batch_size": 8,
+  
+    "learning_rate": 2e-5,
+    "weight_decay": 0.01,
+  
+    "max_epoch": 3,
+  
+    "validate_during_training": true,
+    "log_interval": 10,
+  
+    "checkpoint_path": "",
+  
+    "data_loader": "ExampleDataLoader",
+    "data_loader_workers": 2,
+    "pin_memory": true,
+    "async_loading": true,
+
+    "shuffle_data": true,
+    "max_len": 256
+  }
