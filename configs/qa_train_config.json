@@ -9,6 +9,7 @@
     "seed": 1337,
   
     "batch_size": 8,
+    "valid_batch_size": 32,
   
     "learning_rate": 2e-5,
     "weight_decay": 0.01,
@@ -16,7 +17,10 @@
     "max_epoch": 3,
   
     "validate_during_training": true,
-    "log_interval": 10,
+    "validate_every": 200,
+    "log_interval": 50,
+    "validation_log_interval": 20,
+    "save_every": 500,
   
     "checkpoint_path": "",
   
@@ -26,5 +30,6 @@
     "async_loading": true,
 
     "shuffle_data": true,
-    "max_len": 256
+    "max_len": 256,
+    "num_prev_turns": 2
   }

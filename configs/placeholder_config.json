@@ -18,7 +18,7 @@
   
     "max_epoch": 20,
   
-    "validate_every": 2,
+    "validate_every": 10,
   
     "checkpoint_path": "checkpoint.pth.tar",
   

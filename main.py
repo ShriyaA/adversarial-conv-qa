@@ -1,4 +1,5 @@
 import argparse
+import wandb
 from utils import config_utils
 from utils import logging_utils
 
@@ -15,11 +16,23 @@ def main():
         help='The Configuration file in json format')
     args = arg_parser.parse_args()
 
+    #setup wandb
+    wandb.init()
+    run_name = wandb.run.name
+
     # parse the config json file
     config = config_utils.process_config(args.config)
+    config_utils.create_config_dirs(config, run_name)
 
+    for key,value in wandb.config.items(): # If values are passed from sweep, overwrite them in config
+        if key in config:
+            config[key] = value
+    
     # setup the logger
     logging_utils.setup_logging(config.log_dir)
+
+    # log config
+    config_utils.print_config(config)
 
     # Create the Agent and pass all the configuration to it then run it..
     agent_class = globals()[config.agent]

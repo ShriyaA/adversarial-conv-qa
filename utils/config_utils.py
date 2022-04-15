@@ -24,6 +24,12 @@ def get_config_from_json(json_file):
             print(f"INVALID JSON file format in file {json_file}. Please provide a good json file")
             exit(-1)
 
+def print_config(config):
+    print(" *************************************** ")
+    print("The experiment name is {}".format(config.exp_name))
+    print(" *************************************** ")
+    print(" THE Configuration of your experiment ..")
+    pprint(config)
 
 def process_config(json_file):
     """
@@ -37,23 +43,19 @@ def process_config(json_file):
     :return: config object(namespace)
     """
     config, _ = get_config_from_json(json_file)
-    print(" THE Configuration of your experiment ..")
-    pprint(config)
 
     # making sure that you have provided the exp_name.
     try:
-        print(" *************************************** ")
-        print("The experiment name is {}".format(config.exp_name))
-        print(" *************************************** ")
+        _ = config.exp_name
     except AttributeError:
         print("ERROR!!..Please provide the exp_name in json file..")
         exit(-1)
-
-    # create some important directories to be used for that experiment.
-    config.summary_dir = os.path.join("experiments", config.exp_name, "summaries/")
-    config.checkpoint_dir = os.path.join("experiments", config.exp_name, "checkpoints/")
-    config.out_dir = os.path.join("experiments", config.exp_name, "out/")
-    config.log_dir = os.path.join("experiments", config.exp_name, "logs/")
-    create_dirs([config.summary_dir, config.checkpoint_dir, config.out_dir, config.log_dir])
-
     return config
+
+def create_config_dirs(config, run_name):
+    # create some important directories to be used for that experiment.
+    config.summary_dir = os.path.join("experiments", config.exp_name, run_name, "summaries/")
+    config.checkpoint_dir = os.path.join("experiments", config.exp_name, run_name, "checkpoints/")
+    config.out_dir = os.path.join("experiments", config.exp_name, run_name, "out/")
+    config.log_dir = os.path.join("experiments", config.exp_name, run_name, "logs/")
+    create_dirs([config.summary_dir, config.checkpoint_dir, config.out_dir, config.log_dir])
