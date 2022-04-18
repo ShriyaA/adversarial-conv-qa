@@ -14,12 +14,12 @@
     "learning_rate": 2e-5,
     "weight_decay": 0.01,
   
-    "max_epoch": 3,
+    "max_epoch": 4,
   
     "validate_during_training": true,
-    "validate_every": 200,
-    "log_interval": 50,
-    "validation_log_interval": 20,
+    "validate_every": 300,
+    "log_interval": 300,
+    "validation_log_interval": 25,
     "save_every": 500,
   
     "checkpoint_path": "",

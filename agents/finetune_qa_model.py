@@ -78,7 +78,7 @@ class FinetuneQAModelAgent(BaseAgent):
             model_dir = os.path.join(checkpoint_dir, 'step_{}'.format(self.current_iteration))
         else:
             model_dir = os.path.join(checkpoint_dir, 'best_model')
-        os.makedirs(model_dir)
+        os.makedirs(model_dir, exist_ok=True)
         self.model.save_pretrained(model_dir)
 
     def run(self):
@@ -111,8 +111,8 @@ class FinetuneQAModelAgent(BaseAgent):
 
             if batch_idx % self.config.log_interval == 0:
                 self.logger.info('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                    self.current_epoch, batch_idx * len(batch), len(self.train_dataloader.dataset),
-                           100. * batch_idx / len(self.train_dataloader.dataset), loss.item()))
+                    self.current_epoch, batch_idx, len(self.train_dataloader),
+                           100. * batch_idx / len(self.train_dataloader), loss.item()))
                 wandb.log({'train_loss': loss.item(), 'epoch': self.current_epoch, 'step': self.current_iteration}, step=self.current_iteration)
                         
             if self.config.validate_during_training and batch_idx % self.config.validate_every == 0:
