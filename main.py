@@ -1,5 +1,6 @@
 import argparse
 import wandb
+import logging
 from utils import config_utils
 from utils import logging_utils
 
@@ -32,6 +33,8 @@ def main():
     logging_utils.setup_logging(config.log_dir)
 
     # log config
+    logger = logging.getLogger()
+    logger.info(config)
     config_utils.print_config(config)
 
     # Create the Agent and pass all the configuration to it then run it..

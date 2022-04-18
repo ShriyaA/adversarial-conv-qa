@@ -56,7 +56,7 @@ class QuACDataset(Dataset):
                     pass
         question_with_history = (turn_history.strip() + " " + item['question']).strip()
 
-        inputs = self.tokenizer(question_with_history, item['context'], truncation='only_second', padding='max_length', max_length=self.config.max_len, return_tensors='pt')
+        inputs = self.tokenizer(question_with_history, item['context'], truncation='longest_first', padding='max_length', max_length=self.config.max_len, return_tensors='pt')
         
         start_token = inputs.char_to_token(item['orig_answer']['answer_start'], sequence_index=1)
         if start_token is None:
@@ -68,7 +68,7 @@ class QuACDataset(Dataset):
         return {'input_ids': inputs['input_ids'], 'attention_mask': inputs['attention_mask'], 'start_positions': start_token, 'end_positions': end_token, 'qid': item['turn_id'], 'yesno': item['yesno'], 'followup': item['followup']}
 
 if __name__=='__main__':
-    data = QuACDataset(EasyDict({'model_name': 'distilbert-base-uncased', 'num_prev_turns': '2', 'max_len': 256}), 'validation')
+    data = QuACDataset(EasyDict({'model_name': 'distilbert-base-uncased', 'num_prev_turns': '2', 'max_len': 256}), 'train')
     l = len(data)
     dataloader = DataLoader(data, batch_size=3)
     for batch in dataloader:
