@@ -1,4 +1,6 @@
 import logging
+import string
+import random
 
 def print_cuda_statistics():
     logger = logging.getLogger("Cuda Statistics")
@@ -17,3 +19,8 @@ def print_cuda_statistics():
     logger.info('Active CUDA Device: GPU {}'.format(torch.cuda.current_device()))
     logger.info('Available devices  {}'.format(torch.cuda.device_count()))
     logger.info('Current cuda device  {}'.format(torch.cuda.current_device()))
+
+def get_random_string(length):
+    # choose from all lowercase letter
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(length))

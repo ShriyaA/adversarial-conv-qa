@@ -129,7 +129,7 @@ class FinetuneQGModelAgent(BaseAgent):
 
             input_ids = batch['input_ids'].to(self.device).squeeze()
             attention_mask = batch['attention_mask'].to(self.device).squeeze()
-            labels = batch['labels'].to(self.device)
+            labels = batch['labels'].to(self.device).squeeze()
             
             with torch.no_grad():
                 outputs = self.model(input_ids, attention_mask=attention_mask, labels=labels)

@@ -14,11 +14,12 @@ class QuACQGDataset(QuACDataset):
         answer = item['orig_answer']['text']
         question = item['question']
         inputs = self.tokenizer(context, answer, truncation='longest_first', padding='max_length', max_length=self.config.max_len, return_tensors='pt')
-        labels = self.tokenizer(question, truncation='longest_first', padding='max_length', max_length=self.config.max_len, return_tensors='pt')
-        labels['input_ids'][labels['input_ids']==1] = -1
+        labels = self.tokenizer(question, truncation=True, padding='max_length', max_length=self.config.max_len, return_tensors='pt')
+        labels['input_ids'][labels['input_ids']==1] = -100
+        
         return {'input_ids': inputs['input_ids'], 'attention_mask': inputs['attention_mask'], 'question': question, 'labels':labels['input_ids'], 'qid': item['turn_id']}
 
 if __name__=='__main__':
-    data = QuACQGDataset(EasyDict({'model_name': 'distilbert-base-uncased', 'num_prev_turns': '2', 'max_len': 256}), 'train')
+    data = QuACQGDataset(EasyDict({'model_name': 'facebook/bart-base', 'num_prev_turns': '2', 'max_len': 256}), 'train')
     l = len(data)
     sample = data[25]

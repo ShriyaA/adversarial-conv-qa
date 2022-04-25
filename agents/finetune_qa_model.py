@@ -182,6 +182,7 @@ class FinetuneQAModelAgent(BaseAgent):
 
         if metrics['f1'] > self.best_metric:
             self.logger.info('Saving best model at step {} with F1 Score {}'.format(self.current_iteration, metrics['f1']))
+            wandb.log({'best_f1': metrics['f1']}, step=self.current_iteration)
             self.save_checkpoint(is_best=True)
             
 

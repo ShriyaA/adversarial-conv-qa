@@ -7,6 +7,7 @@
     "cuda": true,
     "gpu_device": 0,
     "seed": 1337,
+    "wandb": true,
   
     "batch_size": 8,
     "valid_batch_size": 32,
