@@ -1,0 +1,29 @@
+{
+    "exp_name": "qg_finetune_baseline",
+    "agent": "FinetuneQGModelAgent",
+    "mode": "train",
+    "model_name": "facebook/bart-base",
+  
+    "cuda": true,
+    "gpu_device": 0,
+    "seed": 1337,
+  
+    "batch_size": 8,
+    "valid_batch_size": 32,
+  
+    "learning_rate": 2e-5,
+    "weight_decay": 0.01,
+  
+    "max_epoch": 4,
+  
+    "validate_during_training": true,
+    "validate_every": 300,
+    "log_interval": 300,
+    "validation_log_interval": 50,
+    "save_every": 500,
+  
+    "checkpoint_path": "",
+
+    "shuffle_data": true,
+    "max_len": 256
+  }
