@@ -78,7 +78,8 @@ class FinetuneQAModelAgent(BaseAgent):
         self.optimizer = optimization.AdamW(optimizer_grouped_parameters, lr=config.learning_rate)
         
         # define scheduler
-        self.scheduler = optimization.get_linear_schedule_with_warmup(self.optimizer, num_warmup_steps=0, num_training_steps=len(self.train_dataloader)*self.config.max_epoch)
+        num_training_steps = len(self.train_dataloader) * self.config.max_epoch
+        self.scheduler = optimization.get_linear_schedule_with_warmup(self.optimizer, num_warmup_steps=int(0.1*num_training_steps), num_training_steps=num_training_steps)
 
         # Summary Writer
         self.summary_writer = None

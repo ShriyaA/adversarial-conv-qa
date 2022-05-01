@@ -133,3 +133,4 @@ data/
 .vscode/
 wandb/
 slurm_logs/
+experiments/
