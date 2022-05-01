@@ -26,6 +26,8 @@
   "checkpoint_path": "",
 
   "shuffle_data": true,
-  "max_len": 256,
-  "num_prev_turns": 2
+  "max_len": 384,
+  "num_prev_turns": 2,
+  "max_query_len": 64,
+  "context_stride": 128
 }
