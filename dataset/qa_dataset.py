@@ -1,12 +1,29 @@
-from lib2to3.pgen2 import token
 import torch
+import json
 from torch.utils.data import DataLoader
 from quac_dataset import QuACDataset
 from easydict import EasyDict
+from transformers import AutoTokenizer
 
 class QuACQADataset(QuACDataset):
     def __init__(self, config, split):
-        super().__init__(config, split)
+
+        if not config.generated_questions:
+            super().__init__(config, split)
+        else:
+            self.config = config
+            self.split = 'train'
+            self.input_file = config.input_file
+            self.tokenizer = AutoTokenizer.from_pretrained(self.config.model_name, use_fast=True)
+            self.num_prev_turns = int(self.config.num_prev_turns)
+            self.turn_id_idx_map = {}
+
+            with open(self.input_file) as f:
+                self.flattened_data = json.load(f)
+            
+            for i,item in enumerate(self.flattened_data):
+                self.turn_id_idx_map[item['turn_id']] = i
+
         self.chunked_data = self.chunk_data()
 
     def chunk_data(self):
@@ -97,6 +114,6 @@ class QuACQADataset(QuACDataset):
         return {'input_ids': item['input_ids'], 'attention_mask': item['attention_mask'], 'token_type_ids': item['token_type_ids'], 'start_positions': item['start_position'], 'end_positions': item['end_position'], 'qid': item['turn_id'], 'yesno': item['yesno'], 'followup': item['followup']}
 
 if __name__=='__main__':
-    data = QuACQADataset(EasyDict({'model_name': 'distilbert-base-uncased', 'num_prev_turns': 11, 'max_len': 256, 'max_query_len': 50, 'context_stride': 128}), 'validation')
+    data = QuACQADataset(EasyDict({'model_name': 'distilbert-base-uncased', 'num_prev_turns': 3, 'max_len': 256, 'max_query_len': 50, 'context_stride': 128, 'generated_questions':True, 'input_file':'./data/generated_questions_filtered.json'}), 'validation')
     l = len(data)
     sample = data[25]

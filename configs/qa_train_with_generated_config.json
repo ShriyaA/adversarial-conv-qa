@@ -1,0 +1,35 @@
+{
+  "exp_name": "qa_finetune_with_generated",
+  "agent": "FinetuneQAModelAgent",
+  "mode": "train",
+  "generated_questions": true,
+  "input_file": "data/generated_questions_filtered.json",
+  "model_name": "distilbert-base-cased",
+
+  "cuda": true,
+  "gpu_device": 0,
+  "seed": 1337,
+  "wandb": true,
+
+  "batch_size": 8,
+  "valid_batch_size": 12,
+
+  "learning_rate": 2e-5,
+  "weight_decay": 0.01,
+
+  "max_epoch": 3,
+
+  "validate_during_training": true,
+  "validate_every": 1000,
+  "log_interval": 300,
+  "validation_log_interval": 100,
+  "save_every": 1000,
+
+  "checkpoint_path": "",
+
+  "shuffle_data": true,
+  "max_len": 384,
+  "num_prev_turns": 2,
+  "max_query_len": 64,
+  "context_stride": 128
+}
